@@ -1,0 +1,50 @@
+# Chess Game Analyzer
+
+Welcome to the Chess Game Analyzer project! This repository contains over 3800 chess games collected from chess.com and analyzed using various techniques. The results of the analysis are presented in a Streamlit web application for easy exploration and visualization.
+
+## Overview
+
+Chess is a game of strategy and tactics, and analyzing games played by skilled players can provide valuable insights into different opening strategies, tactical patterns, and endgame techniques. In this project, we have collected a large dataset of chess games from chess.com and performed detailed analysis on them.
+
+## Features
+
+- **Large Dataset**: The dataset consists of over 3800 chess games played by players of varying skill levels.
+- **Analysis**: The games are analyzed using state-of-the-art techniques to extract valuable information such as opening moves, common tactics, and endgame patterns.
+- **Streamlit Web Application**: The results of the analysis are presented in an interactive web application built with Streamlit, allowing users to explore the data easily.
+
+## How to Use
+
+1. **Clone the Repository**: Clone this repository to your local machine using the following command:
+
+`git clone https://github.com/GermanPaul12/My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit`
+
+
+2. **Install Dependencies**: Navigate to the project directory and install the required dependencies:
+
+```
+cd My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit
+pip install -r requirements.txt
+```
+
+
+3. **Run the Web Application**: Start the Streamlit web application by running the following command:
+
+`streamlit run app.py`
+
+
+This will launch the web application in your default web browser, allowing you to interactively explore the analyzed chess games.
+
+## Contributors
+
+- [German Paul](https://github.com/GermanPaul12)
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+We would like to thank chess.com for providing access to their API for collecting the chess game data used in this project. Additionally, we acknowledge the contributions of the open-source community, whose tools and libraries have been instrumental in the analysis and visualization of the chess games.
+
+Feel free to explore the repository, contribute improvements, or use the analysis results for your own research or projects. Happy analyzing!
