@@ -1,11 +1,16 @@
+import csv
 from datetime import datetime as dt
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from chessdotcom import get_player_game_archives, get_player_games_by_month
+from chessdotcom import Client as ChessClient
+
 
 class Analysis:
-    def __init__(self):
-        self.data = pd.read_csv("data/data.csv", index_col=0)
+    def __init__(self, user):
+        self.data = pd.read_csv("data/user.csv", index_col=0)
+        self.user = user
     
     def total_games(self):
         return self.data.shape[0]   
@@ -14,13 +19,13 @@ class Analysis:
         return len(self.data[self.data.rated == True]) / self.total_games() * 100
 
     def games_won(self):
-        return (len(self.data[(self.data.white_username == "CodingGambit") & (self.data.white_result == "win")]) + len(self.data[(self.data.black_username == "CodingGambit") & (self.data.black_result == "win")])) / self.total_games() * 100
+        return (len(self.data[(self.data.white_username == self.user) & (self.data.white_result == "win")]) + len(self.data[(self.data.black_username == self.user) & (self.data.black_result == "win")])) / self.total_games() * 100
     
     def games_lost(self):
         return 100 - self.games_won() 
     
     def games_with_white(self):
-        return (len(self.data[(self.data.white_username == "CodingGambit")])) / self.total_games() * 100
+        return (len(self.data[(self.data.white_username == self.user)])) / self.total_games() * 100
     
     def games_with_black(self):
         return 100 - self.games_with_white()
@@ -46,7 +51,7 @@ class Analysis:
                 
 
     def peak_rating(self):
-        return max(max(self.data[self.data.white_username == "CodingGambit"]["white_rating"]),max(self.data[self.data.black_username == "CodingGambit"]["black_rating"]))
+        return max(max(self.data[self.data.white_username == self.user]["white_rating"]),max(self.data[self.data.black_username == self.user]["black_rating"]))
 
     def get_top_five_opponents(self):
         opps = self.data.white_username.value_counts()
@@ -65,18 +70,18 @@ class Analysis:
         return data
     
     def highest_white_opp_win(self):
-        data = self.data[(self.data["white_username"] == "CodingGambit") & (self.data['white_result'] == "win")]
+        data = self.data[(self.data["white_username"] == self.user) & (self.data['white_result'] == "win")]
         return data[data.black_rating == max(data.black_rating)][["black_rating", "black_username"]]
     
     def highest_black_opp_win(self):
-        data = self.data[(self.data["black_username"] == "CodingGambit") & (self.data['black_result'] == "win")]
+        data = self.data[(self.data["black_username"] == self.user) & (self.data['black_result'] == "win")]
         return data[data.white_rating == max(data.white_rating)][["white_rating", "white_username"]]
     
     def add_column_my_rating(self) -> list:
         rating = []
         for i in range(len(self.data)):
             row = self.data.iloc[i]
-            if row.white_username == "CodingGambit":
+            if row.white_username == self.user:
                 rating.append(row.white_rating)
             else:
                 rating.append(row.black_rating)
@@ -97,12 +102,59 @@ class Analysis:
         self.add_column_date()
         return None    
     
+def get_monthly_archives(username):
+    ChessClient.request_config["headers"]["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B179 Safari/7534.48.3"
+    return [url.strip().replace("'", "")[-7:].split("/") for url in str(get_player_game_archives(username))[30:-2].split(",")]
+
+
+def get_games_by_month(username):
+    ChessClient.request_config["headers"]["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B179 Safari/7534.48.3"
+    id = 0
+    games = {}
+    for date_ in get_monthly_archives(username):
+        year, month = date_
+        for i, g in enumerate(get_player_games_by_month(username, year, month).json["games"]):
+            try:
+                data = {
+                "id": id,
+                "month": month,
+                "year": year,
+                "url": g["url"],
+                "pgn": g["pgn"],
+                "time_control": g["time_control"],
+                "rated": g["rated"],
+                "time_class": g["time_class"],
+                "rules": g["rules"],
+                "white_rating": g["white"]["rating"],
+                "white_result": g["white"]["result"],
+                "white_username": g["white"]["username"],
+                "black_rating": g["black"]["rating"],
+                "black_result": g["black"]["result"],
+                "black_username": g["black"]["username"]
+                }
+                print("Inserting data:", data)  # Print out data for debugging
+                games[id] = data
+                id += 1
+            except Exception as e:
+                print("Error inserting data:", e)
+                # Handle the exception here as per your requirement
+    
+    with open('data/user.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x  
+        w = csv.DictWriter(f, games[0].keys())
+        w.writeheader()
+        for game in games.values():
+            w = csv.DictWriter(f, game.keys())
+            w.writerow(game)
+    return games
+    
 st.set_page_config(page_title='Analysis',page_icon='📊', layout="wide")
 st.title("Chess.com Games Analysis by Username")
-a = Analysis()
 
 text = st.text_input("Enter an username 👤")
 if text and st.button("Collect data and start analysis"):
+    st.warning("Data collection takes on average less than 1 minute it depends on the number of games of the player.")
+    get_games_by_month(text)
+    a = Analysis(text)
     with st.container(border=True):
         st.markdown("### :blue[A few facts] ♟")
         st.markdown(f"##### At the current moment {text} has played :green[{a.total_games()} games] on chess.com of which :green[{a.percent_rated():.2f}% were rated]")
