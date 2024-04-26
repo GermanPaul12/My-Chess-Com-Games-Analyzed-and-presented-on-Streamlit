@@ -6,6 +6,8 @@ Welcome to the Chess Game Analyzer project! This repository contains over 3800 c
 
 Chess is a game of strategy and tactics, and analyzing games played by skilled players can provide valuable insights into different opening strategies, tactical patterns, and endgame techniques. In this project, we have collected a large dataset of chess games from chess.com and performed detailed analysis on them.
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://chesscom.streamlit.app/)
+
 ## Features
 
 - **Large Dataset**: The dataset consists of over 3800 chess games played by players of varying skill levels.
@@ -29,7 +31,7 @@ pip install -r requirements.txt
 
 3. **Run the Web Application**: Start the Streamlit web application by running the following command:
 
-`streamlit run app.py`
+`streamlit run 🏠_Home.py`
 
 
 This will launch the web application in your default web browser, allowing you to interactively explore the analyzed chess games.
