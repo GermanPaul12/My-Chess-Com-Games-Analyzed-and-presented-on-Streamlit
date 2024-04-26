@@ -1,0 +1,27 @@
+name: Monthly Data Update
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' # Runs at 00:00 UTC on the first day of every month
+
+jobs:
+  update_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Run script to update data
+        run: |
+          # Run your script here that makes the API call, fetches data, and writes it to a CSV file
+          # Example command: python update_data.py
+          python scripts/get_games.py
+
+      - name: Commit and push updated CSV file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update data - ${{ github.event.month }}"
+          git push
