@@ -4,7 +4,7 @@ Welcome to the Chess Game Analyzer project! This repository contains over 3800 c
 
 ## Overview
 
-Chess is a game of strategy and tactics, and analyzing games played by skilled players can provide valuable insights into different opening strategies, tactical patterns, and endgame techniques. In this project, we have collected a large dataset of chess games from chess.com and performed detailed analysis on them.
+Chess is a game of strategy and tactics, and analyzing games played by skilled players can provide valuable insights into different opening strategies, tactical patterns, and endgame techniques. In this project, I have collected a large dataset of chess games from chess.com and performed detailed analysis on them.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://chesscom.streamlit.app/)
 
@@ -13,8 +13,10 @@ Chess is a game of strategy and tactics, and analyzing games played by skilled p
 - **Large Dataset**: The dataset consists of over 3800 chess games played by players of varying skill levels.
 - **Analysis**: The games are analyzed using state-of-the-art techniques to extract valuable information such as opening moves, common tactics, and endgame patterns.
 - **Streamlit Web Application**: The results of the analysis are presented in an interactive web application built with Streamlit, allowing users to explore the data easily.
+- **Up-to-date data**: The dataset is updated everyday at midnight through Github Actions.
+- **Analyze your own games**: Conveniently insert your username and get your own analysis.
 
-## How to Use
+## How to Use locally
 
 1. **Clone the Repository**: Clone this repository to your local machine using the following command:
 
