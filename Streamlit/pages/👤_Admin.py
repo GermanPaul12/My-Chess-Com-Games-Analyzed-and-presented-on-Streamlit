@@ -60,5 +60,5 @@ def get_games_and_update_db():
     conn = st.connection("gsheets", type=GSheetsConnection)
     conn.update(data=df) # Update the data with a given DataFrame.
 
-st.markdown("#### :red[Be cautious this may take up to 3 minutes!]")
+st.markdown("#### :red[Be cautious this may take up to 3 minutes!]. It will take German Paul's newest data to display for you in the 📊:blue[Analysis] Page")
 st.button("fetch newest games and update database", on_click=get_games_and_update_db)
