@@ -1,6 +1,5 @@
 import csv
 import streamlit as st
-from streamlit_gsheets import GSheetsConnection
 from chessdotcom import get_player_game_archives, get_player_games_by_month
 from chessdotcom import Client as ChessClient
 import pandas as pd
