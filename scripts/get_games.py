@@ -1,9 +1,7 @@
-import os
 import streamlit as st
 from chessdotcom import get_player_game_archives, get_player_games_by_month
 from chessdotcom import Client as ChessClient
 import csv
-
 
 def get_monthly_archives(username="codinggambit"):
     ChessClient.request_config["headers"]["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B179 Safari/7534.48.3"
@@ -41,7 +39,8 @@ def get_games_by_month(username="codinggambit"):
             except Exception as e:
                 print("Error inserting data:", e)
                 # Handle the exception here as per your requirement
-    with open('data/data.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+      
+    with open('data/data.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x  
         w = csv.DictWriter(f, games[0].keys())
         w.writeheader()
         for game in games.values():
