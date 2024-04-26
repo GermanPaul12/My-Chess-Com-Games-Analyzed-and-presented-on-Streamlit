@@ -31,4 +31,4 @@ jobs:
         run: |
           git add .
           git commit -m "Update data - ${{ github.run_id }}"
-          git push https://$GITHUB_ACTOR:$${{ secrets.TOKEN_GIT }}@github.com/GermanPaul12/My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit.git HEAD:main
+          git push origin HEAD:main
