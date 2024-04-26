@@ -27,6 +27,10 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
+      - name: Authenticate with token
+        run: |
+          git remote add origin_with_token https://${{ secrets.TOKEN_GIT }}@github.com/${{ github.repository }}
+      
       - name: Commit changes
         run: |
           git add .
@@ -34,4 +38,4 @@ jobs:
 
       - name: Push changes to main branch
         run: |
-          git push origin HEAD:main
+          git push origin_with_token HEAD:main
