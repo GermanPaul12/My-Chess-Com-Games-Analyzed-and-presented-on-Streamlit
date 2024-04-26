@@ -98,29 +98,31 @@ class Analysis:
         return None    
     
 st.set_page_config(page_title='Analysis',page_icon='📊', layout="wide")
-st.title("Chess.com Games Analysis")
+st.title("Chess.com Games Analysis by Username")
 a = Analysis()
 
-with st.container(border=True):
-    st.markdown("### :blue[A few facts] ♟")
-    st.markdown(f"##### At the current moment I have played :green[{a.total_games()} games] on chess.com of which :green[{a.percent_rated():.2f}% were rated]")
-    st.markdown(f"##### I won :green[{a.games_won():.2f}%] and lost :red[{a.games_lost():.2f}%] of the games I played")
-    st.markdown(f"##### I played :blue[{a.games_with_white():.2f}%] of the games with the :blue[white pieces] and :blue[{a.games_with_black():.2f}%] with the :blue[black pieces]")
-    st.markdown(f"##### Most games I had in the time format :blue[{a.most_played_time_format()[0]}] with :blue[{a.most_played_time_format()[1]}] games")
-    st.markdown(f"##### Most played time control is :blue[{a.most_played_time_control()[0]}] with :blue[{a.most_played_time_control()[1]}] games")
-    st.markdown(f"##### My peak rating is :green[{a.peak_rating()}] elo")
-    st.markdown(f"##### With white my highest rated opponent against whom I won is :blue[{a.highest_white_opp_win()['black_username'].values[0]}] and the opponent's elo was :blue[{a.highest_white_opp_win()['black_rating'].values[0]}]")
-    st.markdown(f"##### With black it is :blue[{a.highest_black_opp_win()['white_username'].values[0]}] and the opponent's elo was :blue[{a.highest_black_opp_win()['white_rating'].values[0]}]")
+text = st.text_input("Enter an username 👤")
+if text and st.button("Collect data and start analysis"):
+    with st.container(border=True):
+        st.markdown("### :blue[A few facts] ♟")
+        st.markdown(f"##### At the current moment {text} has played :green[{a.total_games()} games] on chess.com of which :green[{a.percent_rated():.2f}% were rated]")
+        st.markdown(f"##### {text} won :green[{a.games_won():.2f}%] and lost :red[{a.games_lost():.2f}%] of the games he/she played")
+        st.markdown(f"##### {text} played :blue[{a.games_with_white():.2f}%] of the games with the :blue[white pieces] and :blue[{a.games_with_black():.2f}%] with the :blue[black pieces]")
+        st.markdown(f"##### Most games {text} had in the time format :blue[{a.most_played_time_format()[0]}] with :blue[{a.most_played_time_format()[1]}] games")
+        st.markdown(f"##### Most played time control is :blue[{a.most_played_time_control()[0]}] with :blue[{a.most_played_time_control()[1]}] games")
+        st.markdown(f"##### {text}'s peak rating is :green[{a.peak_rating()}] elo")
+        st.markdown(f"##### With white {text}'s highest rated opponent against whom I won is :blue[{a.highest_white_opp_win()['black_username'].values[0]}] and the opponent's elo was :blue[{a.highest_white_opp_win()['black_rating'].values[0]}]")
+        st.markdown(f"##### With black it is :blue[{a.highest_black_opp_win()['white_username'].values[0]}] and the opponent's elo was :blue[{a.highest_black_opp_win()['white_rating'].values[0]}]")
 
 
-with st.container(border=True):
-    st.markdown("### :blue[Visualizations] 📈")
-    opps = a.get_top_five_opponents()
-    st.plotly_chart(px.bar(x=opps.index, y=opps.values, title="Top five opponents I had most games with", labels={'x': 'Usernames', 'y':'Match count'}))
-    time_control = a.get_top_five_time_controls()
-    st.plotly_chart(px.bar(x=time_control.index, y=time_control.values, title="Top five time controls I most played", labels={'x': 'Time control', 'y':'Match count'}))
-    st.markdown("My rating charts for different time controls. Last rating in the chart corresponds to the latest game played in that time control.")
-    a.add_created_columns()
-    for t_class in set(a.data.time_class):  
-        ratings = a.data[a.data.time_class == t_class][["dates", "my_rating"]]
-        st.plotly_chart(px.line(x=ratings.dates, y=ratings.my_rating, title=t_class, labels={'x': 'Date', 'y':'Elo'}))
+    with st.container(border=True):
+        st.markdown("### :blue[Visualizations] 📈")
+        opps = a.get_top_five_opponents()
+        st.plotly_chart(px.bar(x=opps.index, y=opps.values, title=f"Top five opponents {text} had most games with", labels={'x': 'Usernames', 'y':'Match count'}))
+        time_control = a.get_top_five_time_controls()
+        st.plotly_chart(px.bar(x=time_control.index, y=time_control.values, title=f"Top five time controls {text} most played", labels={'x': 'Time control', 'y':'Match count'}))
+        st.markdown(f"{text}'s rating charts for different time controls. Last rating in the chart corresponds to the latest game played in that time control.")
+        a.add_created_columns()
+        for t_class in set(a.data.time_class):  
+            ratings = a.data[a.data.time_class == t_class][["dates", "my_rating"]]
+            st.plotly_chart(px.line(x=ratings.dates, y=ratings.my_rating, title=t_class, labels={'x': 'Date', 'y':'Elo'}))
