@@ -18,28 +18,28 @@ Chess is a game of strategy and tactics, and analyzing games played by skilled p
 
 1. **Clone the Repository**: Clone this repository to your local machine using the following command:
 
-`git clone https://github.com/GermanPaul12/My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit`
-
+    ``` bash
+    git clone https://github.com/GermanPaul12/My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit
+    ```
 
 2. **Install Dependencies**: Navigate to the project directory and install the required dependencies:
 
-```
-cd My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit
-pip install -r requirements.txt
-```
-
+    ``` bash
+    cd My-Chess-Com-Games-Analyzed-and-presented-on-Streamlit
+    pip install -r requirements.txt
+    ```
 
 3. **Run the Web Application**: Start the Streamlit web application by running the following command:
 
-`streamlit run 🏠_Home.py`
-
+    ``` bash
+    streamlit run 🏠_Home.py
+    ```
 
 This will launch the web application in your default web browser, allowing you to interactively explore the analyzed chess games.
 
 ## Contributors
 
 - [German Paul](https://github.com/GermanPaul12)
-
 
 ## License
 
