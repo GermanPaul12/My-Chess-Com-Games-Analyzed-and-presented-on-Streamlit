@@ -27,8 +27,11 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
 
-      - name: Commit and push updated CSV file
+      - name: Commit changes
         run: |
           git add .
           git commit -m "Update data - ${{ github.run_id }}"
+
+      - name: Push changes to main branch
+        run: |
           git push origin HEAD:main
