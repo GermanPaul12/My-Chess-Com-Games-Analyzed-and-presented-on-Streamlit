@@ -16,6 +16,7 @@ jobs:
         run: |
           # Run your script here that makes the API call, fetches data, and writes it to a CSV file
           # Example command: python update_data.py
+          pip install -r requirements.txt
           python scripts/get_games.py
 
       - name: Commit and push updated CSV file

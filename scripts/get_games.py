@@ -1,13 +1,8 @@
 import os
-from supabase import create_client, Client
 import streamlit as st
 from chessdotcom import get_player_game_archives, get_player_games_by_month
 from chessdotcom import Client as ChessClient
 import csv
-
-url: str = st.secrets["SUPABASE_URL"]
-key: str = st.secrets["SUPABASE_KEY"]
-supabase: Client = create_client(url, key)
 
 
 def get_monthly_archives(username="codinggambit"):
