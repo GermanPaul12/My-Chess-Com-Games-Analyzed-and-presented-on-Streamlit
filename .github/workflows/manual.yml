@@ -21,7 +21,7 @@ jobs:
           # Run your script here that makes the API call, fetches data, and writes it to a CSV file
           # Example command: python update_data.py
           python scripts/get_games.py    
-
+  
       - name: Configure Git
         run: |
           git config --global user.email "action@github.com"
@@ -30,6 +30,10 @@ jobs:
       - name: Authenticate with token
         run: |
           git remote add origin_with_token https://${{ secrets.TOKEN_GIT }}@github.com/${{ github.repository }}
+
+      - name: Pull changes from remote repository
+        run: |
+          git pull origin main || echo "No new changes to pull"
       
       - name: Commit changes
         run: |
