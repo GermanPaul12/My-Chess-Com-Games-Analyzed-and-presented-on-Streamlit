@@ -1,4 +1,4 @@
-# Chess Game Analyzer
+# Automated Chess Game Analyzer
 
 Welcome to the Chess Game Analyzer project! This repository contains over 3800 chess games collected from chess.com and analyzed using various techniques. The results of the analysis are presented in a Streamlit web application for easy exploration and visualization.
 
