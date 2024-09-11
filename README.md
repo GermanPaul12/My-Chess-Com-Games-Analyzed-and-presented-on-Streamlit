@@ -34,7 +34,7 @@ Chess is a game of strategy and tactics, and analyzing games played by skilled p
 3. **Change username**: Insert your own username under `/scripts` in the `get_names.py`:
 
     - Replace `codinggambit` with your own username
-    - Alternatively you can skip this part completely and use the page Analysis by Username for that you can proceed with step 4
+    - Alternatively you can skip this part completely and use the page *📊Analysis by Username* for that you can proceed with step 4
 
 4. **Run the Web Application**: Start the Streamlit web application by running the following command:
 
